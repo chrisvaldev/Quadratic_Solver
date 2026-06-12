@@ -13,15 +13,15 @@ class QuadraticSolverApp:
         self.root.geometry("450x450")
         self.root.resizable(False, False)
         
-        # Define uniform color palette (Premium UI Aesthetics)
-        self.COLOR_BG = "#EAEFFE"       # Light blue canvas
-        self.COLOR_CARD = "#FFFFFF"     # Container background
-        self.COLOR_PRIMARY = "#4D56DF"  # Royal blue buttons
-        self.COLOR_TEXT = "#222222"     # Crisp text color
+    
+        self.COLOR_BG = "#EAEFFE"       
+        self.COLOR_CARD = "#FFFFFF"     
+        self.COLOR_PRIMARY = "#4D56DF"  
+        self.COLOR_TEXT = "#222222"     
         
         self.root.configure(bg=self.COLOR_BG)
         
-        # Initialize UI Components
+        
         self._build_header_section()
         self._build_form_section()
         self._build_action_buttons()
@@ -43,23 +43,23 @@ class QuadraticSolverApp:
 
     def _build_form_section(self) -> None:
         """Constructs the container card and grid layout input boxes."""
-        # Clean white card frame wrapper
+        
         self.form_frame = tk.Frame(self.root, bg=self.COLOR_CARD, padx=25, pady=20)
         self.form_frame.pack(padx=25, fill="x")
         
-        # Coefficient 'a' Input Field
+        
         self._create_field_row("Coefficient a:", 0)
         self.entry_a = self._get_last_entry()
         
-        # Coefficient 'b' Input Field
+        
         self._create_field_row("Coefficient b:", 1)
         self.entry_b = self._get_last_entry()
         
-        # Coefficient 'c' Input Field
+        
         self._create_field_row("Coefficient c:", 2)
         self.entry_c = self._get_last_entry()
         
-        # Configure input column weight to look identical to mockups
+
         self.form_frame.columnconfigure(1, weight=1)
 
     def _create_field_row(self, label_text: str, row_index: int) -> None:
@@ -80,7 +80,7 @@ class QuadraticSolverApp:
         btn_frame = tk.Frame(self.root, bg=self.COLOR_BG)
         btn_frame.pack(fill="x", padx=25, pady=20)
 
-        # Solve Call-to-Action
+        
         self.btn_solve = tk.Button(
             btn_frame, text="Solve Equation", font=("Arial", 11, "bold"), 
             bg=self.COLOR_PRIMARY, fg="white", bd=0, height=2,
@@ -89,7 +89,7 @@ class QuadraticSolverApp:
         )
         self.btn_solve.pack(side="left", fill="x", expand=True, padx=(0, 10))
 
-        # Reset Form Call-to-Action
+        
         self.btn_reset = tk.Button(
             btn_frame, text="Reset", font=("Arial", 11, "bold"), 
             bg=self.COLOR_PRIMARY, fg="white", bd=0, height=2,
@@ -109,36 +109,36 @@ class QuadraticSolverApp:
     def calculate_roots(self) -> None:
         """Processes algebraic calculations for real/distinct, repeated, and complex inputs."""
         try:
-            # Typecasting validation checks
+            
             a = float(self.entry_a.get())
             b = float(self.entry_b.get())
             c = float(self.entry_c.get())
             
-            # Form mathematical boundary guards
+    
             if a == 0:
                 messagebox.showerror("Mathematical Error", "The value of 'a' cannot be zero in a quadratic equation.")
                 return
                 
-            # Discriminant: d = b^2 - 4ac
+            
             discriminant = (b ** 2) - (4 * a * c)
             
-            # Outcome 1: Real and Distinct Roots
+            
             if discriminant > 0:
                 x1 = (-b + cmath.sqrt(discriminant).real) / (2 * a)
                 x2 = (-b - cmath.sqrt(discriminant).real) / (2 * a)
                 display_output = f"The roots are real and distinct\nx1 = {x1:.2f}\nx2 = {x2:.2f}"
                 
-            # Outcome 2: Real and Repeated Roots
+            
             elif discriminant == 0:
                 x = -b / (2 * a)
                 display_output = f"The roots are real and repeated\nx = {x:.2f} twice"
                 
-            # Outcome 3: Complex / Imaginary Roots (Hard Challenge Variant)
+            
             else:
                 x1 = (-b + cmath.sqrt(discriminant)) / (2 * a)
                 x2 = (-b - cmath.sqrt(discriminant)) / (2 * a)
                 
-                # Format string to output clean signs without double operators (+ -)
+               
                 sign1 = "+" if x1.imag >= 0 else "-"
                 sign2 = "+" if x2.imag >= 0 else "-"
                 display_output = (
